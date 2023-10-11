@@ -8,11 +8,6 @@
 # Maintainer: Salvatore D'Angelo
 ################################################################################
 
-# Variable for IBM Cloud API Key
-variable "ibmcloud_api_key" {
-  description = "IBM Cloud API Key"
-}
-
 # Define required providers, in this case, IBM Cloud provider
 terraform {
   required_providers {
