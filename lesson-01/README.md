@@ -22,4 +22,73 @@ In this README, we will provide the method to create a VPC via Terraform.
 
 ## Create a VPC with Terraform
 
+Create a ```main.tf``` file with the following content.
+
+First of all, you must tell to the Terraform plan that you're using the IBM Cloud provider. It will download the latest version after the ```1.12.0```.
+
+```
+terraform {
+  required_providers {
+    ibm = {
+      source = "IBM-Cloud/ibm"
+      version = ">= 1.12.0"
+    }
+  }
+}
+```
+
+In the IBM Cloud all the resources must be created in a Resource Group. This is valid also for VPC. In this example I assume you already have a Resource Group called ```test-per-db``` with write access.
+
+Add the resource group in the ```main.tf``` file.
+
+```
+data ibm_resource_group resource_group {
+  name = "test-per-db"
+}
+```
+
+Declare a variable for the API Key required to run the Terraform plan:
+
+```
+variable "ibmcloud_api_key" {
+  description = "IBM Cloud API Key"
+}
+```
+
+Configure the IBM Cloud Provider targetting the ```us-south``` region and using your API key variable.
+
+```
+provider "ibm" {
+  ibmcloud_api_key = var.ibmcloud_api_key
+  region = "us-south"
+}
+```
+
+Create the VPC referencing the Resource group above.
+
+```
+resource "ibm_is_vpc" "testacc_vpc" {
+  name = "test-vpc"
+  resource_group = data.ibm_resource_group.resource_group.id
+}
+```
+
+## Run the Terraform Plan
+
+To run the terraform plan use the following commands:
+
+```
+git clone https://github.com/sasadangelo/terraform-tutorials
+cd terraform-tutorials/lesson-01
+terraform init
+terraform apply -var="ibmcloud_api_key=xxxxxxxx"
+```
+
+where ```xxxxxxxx``` is you IBM Cloud API Key.
+
+To destroy the VPC run the command:
+
+```
+terraform destroy -var="ibmcloud_api_key=xxxxxxxx"
+```
 
