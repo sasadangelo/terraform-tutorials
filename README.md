@@ -4,4 +4,4 @@ This repository contains a set of lessons to help you to use Terraform using the
 
 ## Lessons
 
-* [Lesson 1 - Create a Virtual Private Cloud](docs/Create-VPC.md)
+* [Lesson 1 - Create a Virtual Private Cloud](lesson-01/README.md)
