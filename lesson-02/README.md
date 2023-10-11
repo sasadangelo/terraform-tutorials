@@ -55,4 +55,4 @@ Notice the use of ```${var.resource_group_name}``` to create the VPC name.
 
 ## Run the Terraform Plan
 
-Use the same commands of the section in [Lesson 01 Readme file](../lessn-01/README.md).
+Use the same commands of the section in [Lesson 01 Readme file](../lesson-01/README.md#run-the-terraform-plan).
