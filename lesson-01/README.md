@@ -20,6 +20,6 @@ A Virtual Private Cloud (VPC) is a fundamental networking service on the IBM Clo
 
 In this README, we will provide the method to create a VPC via Terraform.
 
-## Create a VPC
+## Create a VPC with Terraform
 
 
