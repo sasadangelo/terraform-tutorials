@@ -18,21 +18,6 @@ variable "region" {
   default = "us-south"
 }
 
-# Resource group name which will contain all resources per environment (dev, stage, prd, etc)
-variable "resource_group_name" {
-  description = "Resource group name"
-}
-
-# This list declare the Public Gateways list. Each list component has:
-# - gw_name
-# - zone_name
-#variable "gw_info" {
-#  description = "Map of public gateways specific info"
-#  type        = list
-#
-#  default     = []
-#}
-
 # This list declare the Subnets list. Each list component has:
 # - subnet_name
 # - zone_name

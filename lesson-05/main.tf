@@ -20,7 +20,7 @@ terraform {
 
 # Define a data source to retrieve an IBM Cloud resource group
 data ibm_resource_group resource_group {
-  name = var.resource_group_name
+  name = "${var.region}-rg"
 }
 
 # Configure the IBM Provider
@@ -31,7 +31,7 @@ provider "ibm" {
 
 # Create a VPC (Virtual Private Cloud)
 resource "ibm_is_vpc" "testacc_vpc" {
-  name = "${var.resource_group_name}-vpc"
+  name = "${var.region}-rg-vpc"
   resource_group = data.ibm_resource_group.resource_group.id
 }
 

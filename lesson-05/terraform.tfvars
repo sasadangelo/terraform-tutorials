@@ -10,10 +10,6 @@
 # The region where the resources are deployed
 region = "us-south"
 
-# In the IBM Cloud all the resources must belong to a Resource Group.
-# This is the Resource Group where all our resources will be deployed.
-resource_group_name = "test-per-db"
-
 # The VPC Subnets info. We will have 4 subnets for each Availability Zone.
 # Each Subnet will have a predefine IP range (i.e. 10.243.NN.xx where NN is fixed) for a total of 255 available IPs.
 subnet_info = [
