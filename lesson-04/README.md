@@ -1,68 +1,55 @@
-# Lesson 04
+# Lesson 05
 
-In this lesson we will learn how to add the Subnets to the VPC created in the [Lesson 01](../lesson-01/README.md).
+In this lesson we will simplify a bit our code in order to remove unnecessary variables.
 
-## VPC Subnets in the IBM Cloud
+## Simplify the code
 
-In the context of IBM Cloud's Virtual Private Cloud (VPC), a **Subnet** is a fundamental networking concept that plays a crucial role in organizing and segmenting your cloud resources within your private network. Subnets are building blocks within your VPC, allowing you to divide your private network into smaller, more manageable segments.
+Coding is an ongoing process and as you progress in your activity you notice that code could be improved. In our example, a few things can be simplified.
+First of all, I removed the ```gw_info``` list from the ```env-variables.tf``` and ```terraform.tfvars```files, then in the ```main.tf```I changed the code in this way, where basically ```name``` and ```zone``` have been calculated starting from the ```region```:
 
-Key Aspects of Subnets in IBM Cloud VPC are:
+```
+resource "ibm_is_public_gateway" "vpc_gateways" {
+  count = 3
+  resource_group = data.ibm_resource_group.resource_group.id
+  vpc            = ibm_is_vpc.testacc_vpc.id
+  name           = "${var.region}-gateway-${count.index + 1}"
+  zone           = "${var.region}-${count.index + 1}"
+}
+```
 
-* **Segmentation**: Subnets help you logically divide your VPC into smaller address ranges, which can be used to group similar resources together. This segmentation is particularly useful for organizing workloads, enhancing security, and optimizing network traffic.
+In the ```terraform.tfvars``` file I changed the structure ```subnet_info``` in this way because ```subnet_name``` and ```zone_name``` have been derived from the ```region``` variable.
 
-* **Isolation**: Each subnet operates as an isolated network segment, and you can apply specific security rules and policies to control the traffic within and to/from the subnet. This isolation enhances security and ensures that communication is limited to the designated scope.
+```
+subnet_info = [
+  { gw_index = 0, ipv4_cidr_blk = "10.240.20.0/24" },
+  { gw_index = 0, ipv4_cidr_blk = "10.240.21.0/24" },
+  { gw_index = 0, ipv4_cidr_blk = "10.240.22.0/24" },
+  { gw_index = 0, ipv4_cidr_blk = "10.240.23.0/24" },
+  { gw_index = 1, ipv4_cidr_blk = "10.240.84.0/24" },
+  { gw_index = 1, ipv4_cidr_blk = "10.240.85.0/24" },
+  { gw_index = 1, ipv4_cidr_blk = "10.240.86.0/24" },
+  { gw_index = 1, ipv4_cidr_blk = "10.240.87.0/24" },
+  { gw_index = 2, ipv4_cidr_blk = "10.240.148.0/24" },
+  { gw_index = 2, ipv4_cidr_blk = "10.240.149.0/24" },
+  { gw_index = 2, ipv4_cidr_blk = "10.240.150.0/24" },
+  { gw_index = 2, ipv4_cidr_blk = "10.240.151.0/24" }
+]
+```
 
-* **Customization**: IBM Cloud VPC allows you to customize your subnets by defining their IP address ranges and associating them with specific network security groups. This level of customization offers flexibility in designing your network architecture.
-
-* **Connectivity**: Subnets can be connected to one another or to other VPCs through route tables and peering connections, enabling the seamless flow of traffic between different segments of your VPC or even between multiple VPCs.
-
-In this README, we will provide insights into the concept of subnets within an IBM Cloud VPC and explain how to create and manage them effectively. Understanding subnets is essential for designing a network infrastructure that meets your specific requirements, whether it's for hosting virtual machines, containerized applications, or other cloud resources.
-
-## Add the Subnets to the VPC
-
-We need to add four Subnets for each Availability Zone. To do that, add the following lines in the ```main.tf```.
+In the ```main.tf``` I change these line in this way:
 
 ```
 resource "ibm_is_subnet" "vpc_subnets" {
   for_each        = { for i,v in var.subnet_info: i => v }
   resource_group  = data.ibm_resource_group.resource_group.id
   vpc             = ibm_is_vpc.testacc_vpc.id
-  name            = each.value.subnet_name
-  zone            = each.value.zone_name
+  # name is <region>-vpc-subnet-<subnet 3rd octect ip range>
+  name            = "${var.region}-vpc-subnet-${element(split(".", each.value.ipv4_cidr_blk), 2)}"
+  # name is <region>-<gw_index +1>
+  zone            = "${var.region}-${each.value.gw_index + 1}"
   public_gateway  = ibm_is_public_gateway.vpc_gateways[each.value.gw_index].id
   ipv4_cidr_block = each.value.ipv4_cidr_blk
 }
-```
-
-Notice the for loop throught the Subnets list declared in the ```env-variables.tf``` file:
-
-```
-variable "subnet_info" {
-  description = "Map of subnets specific info"
-  type        = list
-
-  default     = []
-}
-```
-
-The declaration specifies only that the structure is a list with no default, the actual values are in the ```terraform.tfvars``` file:
-Now you can use these two variables here in the ```main.tf``` file:
-
-```
-subnet_info = [
-  { subnet_name = "us-south-vpc-subnet1-20", zone_name = "us-south-1", gw_index = 0, ipv4_cidr_blk = "10.240.20.0/24" },
-  { subnet_name = "us-south-vpc-subnet1-21", zone_name = "us-south-1", gw_index = 0, ipv4_cidr_blk = "10.240.21.0/24" },
-  { subnet_name = "us-south-vpc-subnet1-22", zone_name = "us-south-1", gw_index = 0, ipv4_cidr_blk = "10.240.22.0/24" },
-  { subnet_name = "us-south-vpc-subnet1-23", zone_name = "us-south-1", gw_index = 0, ipv4_cidr_blk = "10.240.23.0/24" },
-  { subnet_name = "us-south-vpc-subnet2-84", zone_name = "us-south-2", gw_index = 1, ipv4_cidr_blk = "10.240.84.0/24" },
-  { subnet_name = "us-south-vpc-subnet2-85", zone_name = "us-south-2", gw_index = 1, ipv4_cidr_blk = "10.240.85.0/24" },
-  { subnet_name = "us-south-vpc-subnet2-86", zone_name = "us-south-2", gw_index = 1, ipv4_cidr_blk = "10.240.86.0/24" },
-  { subnet_name = "us-south-vpc-subnet2-87", zone_name = "us-south-2", gw_index = 1, ipv4_cidr_blk = "10.240.87.0/24" },
-  { subnet_name = "us-south-vpc-subnet3-148", zone_name = "us-south-3", gw_index = 2, ipv4_cidr_blk = "10.240.148.0/24" },
-  { subnet_name = "us-south-vpc-subnet3-149", zone_name = "us-south-3", gw_index = 2, ipv4_cidr_blk = "10.240.149.0/24" },
-  { subnet_name = "us-south-vpc-subnet3-150", zone_name = "us-south-3", gw_index = 2, ipv4_cidr_blk = "10.240.150.0/24" },
-  { subnet_name = "us-south-vpc-subnet3-151", zone_name = "us-south-3", gw_index = 2, ipv4_cidr_blk = "10.240.151.0/24" }
-]
 ```
 
 ## Run the Terraform Plan
