@@ -5,7 +5,25 @@ In this lesson we will simplify a bit our code in order to remove unnecessary va
 ## Simplify the code
 
 Coding is an ongoing process and as you progress in your activity you notice that code could be improved. In our example, a few things can be simplified.
-First of all, I removed the ```gw_info``` list from the ```env-variables.tf``` and ```terraform.tfvars```files, then in the ```main.tf```I changed the code in this way, where basically ```name``` and ```zone``` have been calculated starting from the ```region```:
+
+First of all, I decided to create all the resources in a Resource Group called "<region>-rg" so that I can reuse the ```region``` variable. I removed the ```resource_group_name``` from the ``env-variables.tf``` and ```terraform.tfvars``` files. Then in the ```main.tf```I changed the code like this:
+
+```
+data ibm_resource_group resource_group {
+  name = "${var.region}-rg"
+}
+```
+
+Then I defined the VPC in this way:
+
+```
+resource "ibm_is_vpc" "testacc_vpc" {
+  name = "${var.region}-rg-vpc"
+  resource_group = data.ibm_resource_group.resource_group.id
+}
+```
+
+I removed the ```gw_info``` list from the ```env-variables.tf``` and ```terraform.tfvars```files, then in the ```main.tf```I changed the code in this way, where basically ```name``` and ```zone``` have been calculated starting from the ```region```:
 
 ```
 resource "ibm_is_public_gateway" "vpc_gateways" {
