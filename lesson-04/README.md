@@ -64,6 +64,8 @@ subnet_info = [
 ]
 ```
 
+You can use the following [Subnets calculator](https://www.site24x7.com/tools/ipv4-subnetcalculator.html) to find the right IP range.
+
 ## Run the Terraform Plan
 
 Use the same commands of the section in [Lesson 01 Readme file](../lesson-01/README.md#run-the-terraform-plan).
