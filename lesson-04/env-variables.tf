@@ -32,3 +32,15 @@ variable "gw_info" {
 
   default     = []
 }
+
+# This list declare the Subnets list. Each list component has:
+# - subnet_name
+# - zone_name
+# - gw_index
+# - ipv4_cidr_blk
+variable "subnet_info" {
+  description = "Map of subnets specific info"
+  type        = list
+
+  default     = []
+}

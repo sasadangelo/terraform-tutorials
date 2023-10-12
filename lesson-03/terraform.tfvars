@@ -14,6 +14,7 @@ region = "us-south"
 # This is the Resource Group where all our resources will be deployed.
 resource_group_name = "test-per-db"
 
+# The Public Gateways list. One for each Availability zone.
 gw_info = [
   { gw_name = "us-south-gateway-1", zone_name = "us-south-1" },
   { gw_name = "us-south-gateway-2", zone_name = "us-south-2" },
