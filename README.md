@@ -4,5 +4,6 @@ This repository contains a set of lessons to help you to use Terraform using the
 
 ## Lessons
 
-* [Lesson 1 - Create a Virtual Private Cloud](lesson-01/README.md)
-* [Lesson 2 - Use of the Variables](lesson-02/README.md)
+* [Lesson 01 - Create a Virtual Private Cloud](lesson-01/README.md)
+* [Lesson 02 - Use of the Variables](lesson-02/README.md)
+* [Lesson 03 - Add the Public Gateways to the VPC](lesson-03/README.md)
