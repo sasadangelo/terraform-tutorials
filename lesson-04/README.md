@@ -1,4 +1,4 @@
-# Lesson 03
+# Lesson 04
 
 In this lesson we will learn how to add the Subnets to the VPC created in the [Lesson 01](../lesson-01/README.md).
 
