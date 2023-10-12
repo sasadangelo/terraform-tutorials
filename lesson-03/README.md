@@ -1,57 +1,60 @@
-# Lesson 02
+# Lesson 03
 
-In this lesson we will learn how to use variables so that you can deploy the same infrastructure in multiple environments (development, staging, and production) just changing them. This lesson use the same code of [Lesson 01](../lesson-01/README.md) but know it leverages on the variables.
+In this lesson we will learn how to add the Public Gateways to the VPC created in the [Lesson 01](../lesson-01/README.md).
 
-## Use of the variables
+## VPC Public Gateways in the IBM Cloud
 
-First of all, you must understand which parameters will change in your deployment across the different environments. Our example is very simple and we just have two variables that we can define in a ```terraform.tfvars``` file:
+In an IBM Cloud Virtual Private Cloud (VPC), the concept of "public gateways" is an important one. A public gateway is a networking component that serves as an entry point for traffic coming into the VPC from the internet. Here's what it serves in a VPC, especially when there is one public gateway per zone:
+
+* **Internet Connectivity**: A public gateway in each zone provides a means for your VPC resources, such as virtual servers or other services, to connect to the internet. It allows incoming and outgoing internet traffic to flow to and from your resources within the VPC.
+
+* **High Availability**: By having a public gateway in each zone, you ensure high availability and redundancy. If one zone experiences an issue, traffic can be routed through the public gateway in another zone, minimizing potential downtime.
+
+* **Zonal Isolation**: It helps in isolating traffic within specific zones. Resources in one zone can access the internet through their respective public gateway without affecting resources in other zones.
+
+* **Security and Control**: Public gateways can be configured with security rules and access controls to manage incoming and outgoing traffic. This enables you to control and secure the network traffic to and from your VPC resources.
+
+* **Load Balancing and Content Delivery**: Public gateways can be combined with other services like load balancers or content delivery networks to distribute traffic and optimize performance.
+
+* **Compliance and Data Privacy**: In cases where data residency or regulatory requirements are involved, having separate public gateways per zone can help you meet compliance standards by keeping data traffic within specific geographic areas.
+
+In summary, public gateways in each zone of an IBM Cloud VPC provide essential internet connectivity, redundancy, and security for your VPC resources. They play a crucial role in enabling your VPC to interact with the external world while maintaining control and isolation within the VPC.
+
+## Add the Public Gateways to the VPC
+
+We need to add a Public Gateway for each Availability Zone. To do that, add the following lines in the ```main.tf```.
 
 ```
-resource_group_name = "test-per-db"
-region = "us-south"
-```
-
-In order to use these variables you must declare them in a .tf file that we will call ```env-variables.tf```:
-
-```
-variable "ibmcloud_api_key" {
-  description = "IBM Cloud API Key"
+resource "ibm_is_public_gateway" "vpc_gateways" {
+  for_each       = { for i,v in var.gw_info: i => v }
+  resource_group = data.ibm_resource_group.resource_group.id
+  vpc            = ibm_is_vpc.testacc_vpc.id
+  name           = each.value.gw_name
+  zone           = each.value.zone_name
 }
+```
 
-variable "region" {
-  default = "us-south"
-}
+Notice the for loop throught the Public Gateways list declared in the ```env-variables.tf``` file:
 
-variable "resource_group_name" {
-  description = "Resource group name"
+```
+variable "gw_info" {
+  description = "Map of public gateways specific info"
+  type        = list
+
+  default     = []
 }
 ```
 
-You can notice that if a region variable is not specified its default value will be ```us-south```. Moreover, for the API Key we will declare the variable ```ibmcloud_api_key```
-
+The declaration specifies only that the structure is a list with no default, the actual values are in the ```terraform.tfvars``` file:
 Now you can use these two variables here in the ```main.tf``` file:
 
 ```
-data ibm_resource_group resource_group {
-  name = var.resource_group_name
-}
-
-provider "ibm" {
-  ibmcloud_api_key = var.ibmcloud_api_key
-  region = var.region
-}
+gw_info = [
+  { gw_name = "us-south-gateway-1", zone_name = "us-south-1" },
+  { gw_name = "us-south-gateway-2", zone_name = "us-south-2" },
+  { gw_name = "us-south-gateway-3", zone_name = "us-south-3" }
+]
 ```
-
-Since the VPC name is ```<resource group name>-vpc``` we can change the code in the following way:
-
-```
-resource "ibm_is_vpc" "testacc_vpc" {
-  name = "${var.resource_group_name}-vpc"
-  resource_group = data.ibm_resource_group.resource_group.id
-}
-```
-
-Notice the use of ```${var.resource_group_name}``` to create the VPC name.
 
 ## Run the Terraform Plan
 
