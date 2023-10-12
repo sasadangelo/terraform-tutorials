@@ -1,3 +1,3 @@
-lesson-01/.terraform.lock.hcl
-lesson-01/.terraform/*
-lesson-01/terraform.tfstate*
+lesson-*/.terraform.lock.hcl
+lesson-*/.terraform/*
+lesson-*/terraform.tfstate*
