@@ -8,3 +8,4 @@ This repository contains a set of lessons to help you to use Terraform using the
 * [Lesson 02 - Use of the Variables](lesson-02/README.md)
 * [Lesson 03 - Add the Public Gateways to the VPC](lesson-03/README.md)
 * [Lesson 04 - Add the Subnets to the VPC](lesson-04/README.md)
+* [Lesson 05 - Simplify code](lesson-04/README.md)
