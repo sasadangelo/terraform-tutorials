@@ -16,5 +16,5 @@ In each folder, there is a single TF file for that module. You can explore them 
 
 * [vpc.tf](resources/network/vpc/vpc.tf)
 * [public_gw.tf](resources/network/public_gw/public_gw.tf)
-* [subnets.tf](resources/network/subnets/subnets.tf)
+* [subnets.tf](resources/network/subnet/subnet.tf)
 
