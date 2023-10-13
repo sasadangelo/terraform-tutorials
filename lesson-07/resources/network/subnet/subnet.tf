@@ -32,11 +32,11 @@ variable "ipv4_cidr_block" {}
 # - gw_index
 # - ipv4_cidr_blk
 resource "ibm_is_subnet" "itself" {
-  name            = var.subnet_name
-  vpc             = var.vpc
-  zone            = var.zone
-  ipv4_cidr_block = var.ipv4_cidr_block
   resource_group  = var.resource_group
+  zone            = var.zone
+  vpc             = var.vpc
+  name            = var.subnet_name
+  ipv4_cidr_block = var.ipv4_cidr_block
 }
 
 output "id" {
