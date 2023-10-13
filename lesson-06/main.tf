@@ -11,19 +11,11 @@ data ibm_resource_group rg {
   name = var.resource_group
 }
 
-variable "ibmcloud_api_key" {
-  description = "IBM Cloud API Key"
-}
-
 # Configure the IBM Provider
 provider "ibm" {
   ibmcloud_api_key = var.ibmcloud_api_key
   region = var.region
 }
-
-variable "region" {}
-variable "resource_group" {}
-variable "subnet_info" {}
 
 data "ibm_is_vpc" "vpc" {
   name = "${var.resource_group}-vpc"
