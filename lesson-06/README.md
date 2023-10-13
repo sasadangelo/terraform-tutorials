@@ -15,4 +15,6 @@ Now in this lesson I created in the ```network``` folder three modules for:
 In each folder, there is a single TF file for that module. You can explore them clicking the following links:
 
 * [vpc.tf](resources/network/vpc/vpc.tf)
+* [public_gw.tf](resources/network/public_gw/public_gw.tf)
+* [subnets.tf](resources/network/subnets/subnets.tf)
 
