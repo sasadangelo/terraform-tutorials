@@ -35,7 +35,7 @@ subnet_info = [
 vsi_name                      = "my-vsi"
 vsi_zone                      = "us-south-1"
 vsi_profile                   = "bx2-2x8"
-vsi_os_image_name             = "ibm-ubuntu-22-04-3-minimal-amd64-1"
+vsi_os_image_name             = "ibm-redhat-9-2-minimal-amd64-2"
 # Generate a SSH Key pais with the command:
 # $ ssh-keygen -t rsa
 # then put here the public key.
