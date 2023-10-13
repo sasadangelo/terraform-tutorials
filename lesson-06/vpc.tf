@@ -1,5 +1,5 @@
 ################################################################################
-# main.tf - Creating a Virtual Private Cloud (VPC) on IBM Cloud
+# vpc.tf - Creating a Virtual Private Cloud (VPC) on IBM Cloud
 ################################################################################
 # Copyright 2023 Salvatore D'Angelo
 #

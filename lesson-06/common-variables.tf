@@ -1,5 +1,5 @@
 ################################################################################
-# env-variables.tf - Declare the variables used by the Terraform plan
+# common-variables.tf - Common variables for the module
 ################################################################################
 # Copyright 2023 Salvatore D'Angelo
 #
@@ -16,16 +16,4 @@ variable "ibmcloud_api_key" {
 # Set region in IBM Cloud
 variable "region" {
   default = "us-south"
-}
-
-# This list declare the Subnets list. Each list component has:
-# - subnet_name
-# - zone_name
-# - gw_index
-# - ipv4_cidr_blk
-variable "subnet_info" {
-  description = "Map of subnets specific info"
-  type        = list
-
-  default     = []
 }

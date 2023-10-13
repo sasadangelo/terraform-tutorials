@@ -1,5 +1,5 @@
 ################################################################################
-# terraform.tfvars - Define the variables of your Terraform plan
+# vpc.tfvars - Define the variables of your Terraform plan
 ################################################################################
 # Copyright 2023 Salvatore D'Angelo
 #
@@ -13,14 +13,17 @@ region = "us-south"
 # The VPC Subnets info. We will have 4 subnets for each Availability Zone.
 # Each Subnet will have a predefine IP range (i.e. 10.243.NN.xx where NN is fixed) for a total of 255 available IPs.
 subnet_info = [
+  # Zone 1 subnets
   { gw_index = 0, ipv4_cidr_blk = "10.240.20.0/24" },
   { gw_index = 0, ipv4_cidr_blk = "10.240.21.0/24" },
   { gw_index = 0, ipv4_cidr_blk = "10.240.22.0/24" },
   { gw_index = 0, ipv4_cidr_blk = "10.240.23.0/24" },
+  # Zone 2 subnets
   { gw_index = 1, ipv4_cidr_blk = "10.240.84.0/24" },
   { gw_index = 1, ipv4_cidr_blk = "10.240.85.0/24" },
   { gw_index = 1, ipv4_cidr_blk = "10.240.86.0/24" },
   { gw_index = 1, ipv4_cidr_blk = "10.240.87.0/24" },
+  # Zone 3 subnets
   { gw_index = 2, ipv4_cidr_blk = "10.240.148.0/24" },
   { gw_index = 2, ipv4_cidr_blk = "10.240.149.0/24" },
   { gw_index = 2, ipv4_cidr_blk = "10.240.150.0/24" },
