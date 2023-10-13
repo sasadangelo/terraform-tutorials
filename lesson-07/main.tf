@@ -23,7 +23,6 @@ provider "ibm" {
 
 variable "region" {}
 variable "resource_group" {}
-variable "subnet_info" {}
 
 data "ibm_is_vpc" "vpc" {
   name = "${var.resource_group}-vpc"
@@ -31,9 +30,9 @@ data "ibm_is_vpc" "vpc" {
 }
 
 module "vpc" {
-  source         = "./resources/network/vpc"
+  source = "./resources/network/vpc"
   resource_group = data.ibm_resource_group.rg.id
-  name           = "${var.resource_group}-vpc"
+  name = "${var.resource_group}-vpc"
 }
 
 // This module creates a public gateway if needed
@@ -44,14 +43,4 @@ module "public_gw" {
   vpc             = data.ibm_is_vpc.vpc.id
   zone            = "${var.region}-${count.index + 1}"
   resource_group  = data.ibm_resource_group.rg.id
-}
-
-module "subnet" {
-  for_each        = { for i,v in var.subnet_info: i => v }
-  source            = "./resources/network/subnet"
-  subnet_name       = "${var.region}-vpc-subnet-${element(split(".", each.value.ipv4_cidr_blk), 2)}"
-  vpc               = data.ibm_is_vpc.vpc.id
-  zone            = "${var.region}-${each.value.gw_index + 1}"
-  ipv4_cidr_block = each.value.ipv4_cidr_blk
-  resource_group    = data.ibm_resource_group.rg.id
 }
