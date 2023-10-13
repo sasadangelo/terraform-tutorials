@@ -10,10 +10,6 @@ terraform {
 variable "ibmcloud_api_key" {}
 variable "region" {}
 
-data ibm_resource_group resource_group {
-  name = "${var.region}-rg"
-}
-
 module "vpc" {
   source                        = "./resources/network/vpc"
   resource_group                = data.ibm_resource_group.resource_group.id
