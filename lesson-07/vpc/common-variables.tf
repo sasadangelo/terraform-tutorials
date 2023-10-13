@@ -1,5 +1,5 @@
 ################################################################################
-# common-variables.tf - Common variables for the module
+# common-variables.tf - common variables for the module
 ################################################################################
 # Copyright 2023 Salvatore D'Angelo
 #
@@ -17,3 +17,4 @@ variable "ibmcloud_api_key" {
 variable "region" {
   default = "us-south"
 }
+

@@ -7,6 +7,10 @@ data "ibm_is_vpc" "vsi_vpc" {
   name = "${var.region}-rg-vpc"
 }
 
+data "ibm_is_subnet" "vsi_subnet" {
+  name = var.vsi_subnet_name
+}
+
 data "ibm_is_image" "vsi_osimage" {
   name  = var.vsi_os_image_name
 }
@@ -29,9 +33,11 @@ resource "ibm_is_instance" "vsi_instance" {
   volumes = ibm_is_volume.vsi_volumes[*].id
 
   primary_network_interface {
-    subnet          = element(data.ibm_is_subnet.subnet_info[*], var.vsi_subnet_index).id
+    subnet          = data.ibm_is_subnet.vsi_subnet.id
+    #subnet          = element(data.ibm_is_subnet.subnet_info[*], var.vsi_subnet_index).id
     #security_groups = [ibm_is_security_group.vsi_sg1.id]
-    primary_ipv4_address = cidrhost(element(data.ibm_is_subnet.subnet_info[*], var.vsi_subnet_index).ipv4_cidr_block, var.vsi_ip_octet)
+    #primary_ipv4_address = cidrhost(element(data.ibm_is_subnet.subnet_info[*], var.vsi_subnet_index).ipv4_cidr_block, var.vsi_ip_octet)
+    primary_ipv4_address = cidrhost(data.ibm_is_subnet.vsi_subnet.ipv4_cidr_block, var.vsi_ip_octet)
   }
 
   lifecycle {

@@ -18,6 +18,10 @@ variable "vsi_zone" {
   description = "The AZ where the VSI will be deployed"
 }
 
+variable "vsi_subnet_name" {
+  description = "name of subnet"
+}
+
 # The VSI Profile 
 variable "vsi_profile" {
   description = "The VSI Profile"
@@ -51,9 +55,4 @@ variable "vsi_with_fip" {
 
 variable vsi_keys {
   description = "The VSI SSH keys used to access to the machine and for automation"
-}
-
-variable vsi_subnet_index {
-  description = "The index of the subnet to use"
-  type = number
 }
