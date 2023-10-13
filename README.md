@@ -22,7 +22,7 @@ Once you understand how modules works, it's easy to extend this code base lookin
 ### Networking
 
 * Here an example on how to add a VPN Gateway. [main.tf](https://github.ibm.com/workload-eng-services/HPCaaS/blob/f91ed34214f01e51c2ce3da5b7c6e7538f4da93e/main.tf#L373-L380) [vpn.tf](https://github.ibm.com/workload-eng-services/HPCaaS/blob/develop/resources/network/vpn/vpn.tf)
-* Here an example how to add a VPN Connection. [main.tf]([https://github.ibm.com/workload-eng-services/HPCaaS/blob/f91ed34214f01e51c2ce3da5b7c6e7538f4da93e/main.tf#L373-L380](https://github.ibm.com/workload-eng-services/HPCaaS/blob/f91ed34214f01e51c2ce3da5b7c6e7538f4da93e/main.tf#L383-L393) [vpn_connection.tf](https://github.ibm.com/workload-eng-services/HPCaaS/blob/develop/resources/network/vpn_connection/vpn_connection.tf)
+* Here an example how to add a VPN Connection. [main.tf](https://github.ibm.com/workload-eng-services/HPCaaS/blob/f91ed34214f01e51c2ce3da5b7c6e7538f4da93e/main.tf#L383-L393) [vpn_connection.tf](https://github.ibm.com/workload-eng-services/HPCaaS/blob/develop/resources/network/vpn_connection/vpn_connection.tf)
 
 ### Compute
 
