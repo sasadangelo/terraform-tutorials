@@ -24,11 +24,10 @@ variable "zone" {}
 variable "resource_group" {}
 
 resource "ibm_is_public_gateway" "itself" {
-  count          = length(var.zone)
-  name           = "${var.public_gw_name}-${count.index + 1}"
-  vpc            = var.vpc
-  zone           = var.zone[count.index]
   resource_group = var.resource_group
+  zone           = var.zone
+  vpc            = var.vpc
+  name           = "${var.public_gw_name}"
 
   timeouts {
     create = "90m"
