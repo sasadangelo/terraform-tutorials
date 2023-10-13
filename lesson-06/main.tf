@@ -8,29 +8,24 @@ terraform {
 }
 
 variable "ibmcloud_api_key" {
-  type        = string
-  sensitive   = true
   description = "IBM Cloud API Key"
-  validation {
-    condition     = var.ibmcloud_api_key != ""
-    error_message = "API key for IBM Cloud must be set."
-  }
 }
 variable "region" {}
+variable "resource_group" {}
 
-data ibm_resource_group resource_group {
-  name = "${var.region}-rg"
+data ibm_resource_group rg {
+  name = var.resource_group
 }
 
 data "ibm_is_vpc" "vpc" {
-    name = "${var.region}-rg-vpc"
-    depends_on = [module.vpc]
+  name = "${var.region}-rg-vpc"
+  depends_on = [module.vpc]
 }
 
 module "vpc" {
-  source                        = "./resources/network/vpc"
-  resource_group                = data.ibm_resource_group.resource_group.id
-  name                          = "${var.region}-vpc"
+  source = "./resources/network/vpc"
+  resource_group = data.ibm_resource_group.rg.id
+  name = "${var.region}-vpc"
 }
 
 // This module creates a public gateway if needed
