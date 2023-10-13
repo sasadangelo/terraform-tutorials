@@ -22,10 +22,18 @@ data "ibm_is_vpc" "vpc" {
   depends_on = [module.vpc]
 }
 
+data ibm_is_image image {
+  name = var.vsi_os_image_name
+}
+
 module "vpc" {
   source         = "./resources/network/vpc"
   resource_group = data.ibm_resource_group.rg.id
   name           = "${var.resource_group}-vpc"
+}
+
+data "ibm_is_image" "stock_image" {
+  name = var.vsi_os_image_name
 }
 
 // This module creates a public gateway if needed
@@ -58,7 +66,7 @@ module "ssh-keys" {
 module "vsi" {
   source             = "./resources/compute/vsi"
   name               = "${var.vsi_name}"
-  image              = "${var.vsi_os_image_name}"
+  image              = data.ibm_is_image.stock_image.id
   profile            = "${var.vsi_profile}"
   vpc                = data.ibm_is_vpc.vpc.id
   zone               = "us-south-1"
