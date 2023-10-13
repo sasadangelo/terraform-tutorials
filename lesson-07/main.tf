@@ -22,12 +22,6 @@ data "ibm_is_vpc" "vpc" {
   depends_on = [module.vpc]
 }
 
-data "ibm_is_ssh_key" "vsi_sshkeys" {
-  count           = length(var.vsi_keys)
-  name            = "${var.resource_group}-sshkey-${count.index}"
-  public_key      = var.vsi_keys[count.index]
-}
-
 module "vpc" {
   source         = "./resources/network/vpc"
   resource_group = data.ibm_resource_group.rg.id
@@ -54,6 +48,13 @@ module "subnet" {
   resource_group    = data.ibm_resource_group.rg.id
 }
 
+module "ssh-keys" {
+  source             = "./resources/security/ssh-keys"
+  name               = var.vsi_ssh_keys_name
+  public_key         = var.vsi_ssh_keys_public_key
+  resource_group     = data.ibm_resource_group.rg.id
+}
+
 module "vsi" {
   source             = "./resources/compute/vsi"
   name               = "${var.vsi_name}"
@@ -61,7 +62,7 @@ module "vsi" {
   profile            = "${var.vsi_profile}"
   vpc                = data.ibm_is_vpc.vpc.id
   zone               = "us-south-1"
-  keys               = data.ibm_is_ssh_key.vsi_sshkeys[*].id
+  keys               = [module.ssh-keys.id]
   resource_group     = data.ibm_resource_group.rg.id
   subnet_id          = module.subnet[0].id
 }

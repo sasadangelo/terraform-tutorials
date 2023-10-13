@@ -45,19 +45,9 @@ variable "vsi_zone" {
   description = "The AZ where the VSI will be deployed"
 }
 
-variable "vsi_subnet_name" {
-  description = "name of subnet"
-}
-
 # The VSI Profile 
 variable "vsi_profile" {
   description = "The VSI Profile"
-}
-
-# The 4th VSI IP 
-variable "vsi_ip_octet" {
-  default = 34
-  description = "variable used to define the static IP for vsi, for example x.x.x.34"
 }
 
 # The VSI OS Image name
@@ -65,21 +55,15 @@ variable "vsi_os_image_name" {
   default = "ibm-centos-7-9-minimal-amd64-3"
 }
 
-variable vsi_volumes_sizes_gb {
-  default = []
-  description = "array containing the sizes of volumes to be created"
-}
-
 variable "vsi_volume_profile" {
   default = "general-purpose"
   description = "type of storage volume, refer to IBM Cloud docs for more info"
 }
 
-variable "vsi_with_fip" {
-  default = false
-  description = "allocate a floating IP"
+variable "vsi_ssh_keys_name" {
+  description = "The VSI SSH Key name"
 }
 
-variable vsi_keys {
-  description = "The VSI SSH keys used to access to the machine and for automation"
+variable "vsi_ssh_keys_public_key" {
+  description = "The VSI SSH Public Key"
 }
