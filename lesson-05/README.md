@@ -1,6 +1,6 @@
 # Lesson 05
 
-In this lesson we will simplify a bit our code in order to remove unnecessary variables.
+In this lesson we will simplify a bit our code in order to remove unnecessary variables. The code base for this lesson is the [following repository](https://github.ibm.com/ibm-cloudfoundry/infrastructure).
 
 ## Simplify the code
 
