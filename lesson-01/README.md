@@ -1,6 +1,6 @@
 # Lesson 01
 
-In this lesson we will learn how to create a Virtual Cloud Network (VPC) where our resources (Virtual Server Instances, etcc) will be created.
+In this lesson we will learn how to create a Virtual Cloud Network (VPC) where our resources (Virtual Server Instances, etcc) will be created. The code base for this lesson is the [following repository](https://github.ibm.com/ibm-cloudfoundry/infrastructure).
 
 ## What is a Virtual Private Cloud?
 
