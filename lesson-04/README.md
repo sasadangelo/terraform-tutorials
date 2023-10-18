@@ -1,6 +1,6 @@
 # Lesson 04
 
-In this lesson we will learn how to add the Subnets to the VPC created in the [Lesson 01](../lesson-01/README.md).
+In this lesson we will learn how to add the Subnets to the VPC created in the [Lesson 01](../lesson-01/README.md). The code base for this lesson is the [following repository](https://github.ibm.com/ibm-cloudfoundry/infrastructure).
 
 ## VPC Subnets in the IBM Cloud
 
