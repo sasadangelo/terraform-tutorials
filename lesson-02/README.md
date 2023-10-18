@@ -1,6 +1,6 @@
 # Lesson 02
 
-In this lesson we will learn how to use variables so that you can deploy the same infrastructure in multiple environments (development, staging, and production) just changing them. This lesson use the same code of [Lesson 01](../lesson-01/README.md) but know it leverages on the variables.
+In this lesson we will learn how to use variables so that you can deploy the same infrastructure in multiple environments (development, staging, and production) just changing them. This lesson use the same code of [Lesson 01](../lesson-01/README.md) but know it leverages on the variables. The code base for this lesson is the [following repository](https://github.ibm.com/ibm-cloudfoundry/infrastructure).
 
 ## Use of the variables
 
